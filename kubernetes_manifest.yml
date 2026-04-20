@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: group-manager-front
+  namespace: moreillon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: group-manager-front
+  template:
+    metadata:
+      labels:
+        app: group-manager-front
+    spec:
+      containers:
+        - name: group-manager-front
+          image: ${CONTAINER_IMAGE_TAGGED}
+          env:
+            - name: VITE_OIDC_AUTHORITY
+              value: https://keycloak.jtektrnd.net/realms/jtekt
+            - name: VITE_OIDC_CLIENT_ID
+              value: public
+            - name: VITE_LOGIN_URL
+              value: https://employees-api.jtektrnd.net/v3/auth/login
+            - name: VITE_IDENTIFICATION_URL
+              value: https://employees-api.jtektrnd.net/v3/users/self
+            - name: VITE_GROUP_MANAGER_API_URL
+              value: https://groups-api.jtektrnd.net
+          envFrom:
+            - secretRef:
+                name: environment-variables
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: group-manager-front
+  namespace: moreillon
+spec:
+  ports:
+    - port: 80
+      nodePort: 31101
+  selector:
+    app: group-manager-front
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: group-manager-front-legacy
+  namespace: moreillon
+spec:
+  ports:
+    - port: 80
+      nodePort: 31100
+  selector:
+    app: group-manager-front
+  type: NodePort
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: group-manager-front
+spec:
+  ingressClassName: jtektrnd-net
+  rules:
+    - host: groups.jtektrnd.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: group-manager-front
+                port:
+                  number: 80
