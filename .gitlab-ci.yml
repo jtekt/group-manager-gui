@@ -16,6 +16,9 @@ build-job:
     - if: $CI_COMMIT_BRANCH == "master"
   before_script:
     - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ECR_PUBLIC_URL}
+    - >
+      aws ecr-public create-repository --region us-east-1 --repository-name ${APPLICATION_NAME}
+      || echo "Repository might have already existed"
   script:
     - docker build -t ${CONTAINER_IMAGE} .
     - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE_TAGGED}
