@@ -7,6 +7,7 @@
         <template #append>
           <LocaleSelector />
           <ThemeToggle />
+          <v-btn v-if="VITE_APPS_URL" :href="VITE_APPS_URL" icon="mdi-apps" />
           <v-btn icon="mdi-logout" @click="handleLogout" />
         </template>
       </v-app-bar>
@@ -40,6 +41,8 @@ import { useI18n } from "vue-i18n";
 import { useAuth } from "@/composables/useAuth";
 import LocaleSelector from "@/components/LocaleSelector.vue";
 import ThemeToggle from "@/components/ThemeToggle.vue";
+
+const { VITE_APPS_URL } = import.meta.env;
 
 const { t } = useI18n();
 const route = useRoute();

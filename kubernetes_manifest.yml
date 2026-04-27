@@ -27,6 +27,9 @@ spec:
               value: https://employees-api.jtektrnd.net/v3/users/self
             - name: VITE_GROUP_MANAGER_API_URL
               value: https://groups-api.jtektrnd.net
+            - name: VITE_APPS_URL
+              value: https://apps.jtektrnd.net
+          resources: {}
           envFrom:
             - secretRef:
                 name: environment-variables
