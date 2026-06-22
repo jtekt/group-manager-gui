@@ -68,7 +68,7 @@ metadata:
   annotations:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: Group Manager
-    gethomepage.dev/icon: mdi-account-group
+    gethomepage.dev/icon: https://gitlab.jtektrnd.net/uploads/-/system/project/avatar/4316/account-multiple-custom.png
     gethomepage.dev/group: 業務アプリ
     gethomepage.dev/pod-selector: app=group-manager-front
 spec:
