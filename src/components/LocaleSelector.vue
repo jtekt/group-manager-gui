@@ -26,8 +26,4 @@ const locales = [
 function saveLocale() {
   localStorage.locale = locale.value;
 }
-
-onMounted(() => {
-  if (localStorage.locale) locale.value = localStorage.locale;
-});
 </script>

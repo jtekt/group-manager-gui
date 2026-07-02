@@ -28,7 +28,7 @@
         <v-window-item value="browse">
           <GroupPicker
             :groupManagerApiUrl="groupManagerApiUrl"
-            :accessToken="accessToken"
+            :accessToken="session?.accessToken"
             @selection="groupSelected"
             :usersWithNoGroup="false"
           />
@@ -48,12 +48,12 @@ import {
   GroupPicker,
   type GroupItem,
 } from "@moreillon/group-manager-vue-picker";
-import { useAuth } from "@/composables/useAuth";
 import GroupSearch from "@/components/GroupSearch.vue";
+import { useAuth } from "@jtekt/vuetify-auth";
 
 const route = useRoute();
 const router = useRouter();
-const { accessToken } = useAuth();
+const { session } = useAuth();
 const tab = ref((route.query.tab as string) || "browse");
 const groupManagerApiUrl = import.meta.env.VITE_GROUP_MANAGER_API_URL;
 
