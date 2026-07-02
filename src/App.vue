@@ -78,7 +78,6 @@ watch(
   [session],
   ([auth]) => {
     if (auth?.accessToken) {
-      console.log(auth.user.profile)
       api.defaults.headers.common.Authorization = `Bearer ${auth.accessToken}`
     } 
   },
