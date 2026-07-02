@@ -1,17 +1,17 @@
 <template>
   <v-app>
-    <template v-if="!route.meta.public">
-      <v-app-bar color="black">
-        <v-app-bar-nav-icon @click="drawer = !drawer" />
-        <v-app-bar-title>Group manager </v-app-bar-title>
-        <template #append>
-          <LocaleSelector />
-          <ThemeToggle />
-          <v-btn v-if="VITE_APPS_URL" :href="VITE_APPS_URL" icon="mdi-apps" />
-          <v-btn icon="mdi-logout" @click="handleLogout" />
-        </template>
-      </v-app-bar>
+    <v-app-bar color="black">
+      <v-app-bar-nav-icon v-if="!route.meta.public" @click="drawer = !drawer" />
+      <v-app-bar-title>Group manager </v-app-bar-title>
+      <template #append>
+        <LocaleSelector />
+        <ThemeToggle />
+        <v-btn v-if="VITE_APPS_URL" :href="VITE_APPS_URL" icon="mdi-apps" />
+        <v-btn  v-if="!route.meta.public" icon="mdi-logout" @click="logout" />
+      </template>
+    </v-app-bar>
 
+    <template v-if="!route.meta.public">
       <v-navigation-drawer v-model="drawer">
         <v-list nav>
           <v-list-item
@@ -35,19 +35,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { ref, computed, watch } from "vue";
+import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { useAuth } from "@/composables/useAuth";
 import LocaleSelector from "@/components/LocaleSelector.vue";
 import ThemeToggle from "@/components/ThemeToggle.vue";
+import { useAuth } from "@jtekt/vuetify-auth";
+import api from "./api";
 
 const { VITE_APPS_URL } = import.meta.env;
 
 const { t } = useI18n();
 const route = useRoute();
-const router = useRouter();
-const { logout } = useAuth();
+const { session, logout } = useAuth();
 
 const drawer = ref(true);
 
@@ -74,10 +74,15 @@ const nav = computed(() => [
   },
 ]);
 
-function handleLogout() {
-  logout();
-  router.push({ name: "Login" });
-}
+watch(
+  [session],
+  ([auth]) => {
+    if (auth?.accessToken) {
+      api.defaults.headers.common.Authorization = `Bearer ${auth.accessToken}`
+    } 
+  },
+  { immediate: true }
+)
 </script>
 
 <style>

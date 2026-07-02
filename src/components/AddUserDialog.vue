@@ -13,7 +13,7 @@
           <v-col>
             <UserPicker
               :groupManagerApiUrl="groupManagerApiUrl"
-              :accessToken="accessToken"
+              :accessToken="session?.accessToken"
               @selection="addUser"
             />
           </v-col>
@@ -60,8 +60,8 @@ import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { UserPicker, type User } from "@moreillon/group-manager-vue-picker";
-import { useAuth } from "@/composables/useAuth";
 import api from "@/api";
+import { useAuth } from "@jtekt/vuetify-auth";
 
 const props = defineProps<{ as?: string }>();
 const emit = defineEmits<{ usersChanged: [] }>();
@@ -74,7 +74,7 @@ const dialogTitle = computed(() => {
   return t("Add user");
 });
 const route = useRoute();
-const { accessToken } = useAuth();
+const { session } = useAuth();
 const dialog = ref(false);
 const selectedUsers = ref<User[]>([]);
 const groupManagerApiUrl = import.meta.env.VITE_GROUP_MANAGER_API_URL;

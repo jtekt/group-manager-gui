@@ -11,7 +11,7 @@
       <v-card-text>
         <GroupPicker
           :groupManagerApiUrl="groupManagerApiUrl"
-          :accessToken="accessToken"
+          :accessToken="session?.accessToken"
           @selection="groupSelected"
         />
       </v-card-text>
@@ -32,13 +32,13 @@ import {
   type GroupItem,
 } from "@moreillon/group-manager-vue-picker";
 import { useI18n } from "vue-i18n";
-import { useAuth } from "@/composables/useAuth";
+import { useAuth } from "@jtekt/vuetify-auth";
 
 const props = defineProps<{ as?: string }>();
 const emit = defineEmits<{ groupAdd: [group: GroupItem] }>();
 
 const { t } = useI18n();
-const { accessToken } = useAuth();
+const { session } = useAuth();
 const dialog = ref(false);
 const groupManagerApiUrl = import.meta.env.VITE_GROUP_MANAGER_API_URL;
 

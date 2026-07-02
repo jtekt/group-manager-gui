@@ -109,7 +109,7 @@
               </v-col>
               <v-col cols="auto">
                 <v-switch
-                  :disabled="!currentUser?.isAdmin"
+                  :disabled="!session?.user.profile?.isAdmin"
                   v-model="group.official"
                   :label="$t('Official')"
                   hide-details
@@ -193,15 +193,15 @@
 import { ref, computed, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { useAuth } from "@/composables/useAuth";
 import DeleteGroupDialog from "@/components/DeleteGroupDialog.vue";
 import GroupsOfGroups from "@/components/GroupsOfGroups.vue";
 import UsersOfGroup from "@/components/UsersOfGroup.vue";
 import api from "@/api";
+import { useAuth } from "@jtekt/vuetify-auth";
 
 const route = useRoute();
 const { t } = useI18n();
-const { currentUser, currentUserId } = useAuth();
+const { session } = useAuth();
 
 const group = ref<any>(null);
 const unmodifiedGroupCopy = ref<any>(null);
@@ -221,7 +221,7 @@ const snackbar = ref({ show: false, message: "", color: "" });
 const groupId = computed(() => route.params.group_id as string);
 
 function matchesCurrentUser(entity: any) {
-  const id = currentUserId.value;
+  const id = session.value?.user.id;
   if (!id) return false;
   return entity._id === id || entity.username === id;
 }
@@ -233,7 +233,7 @@ const currentUserIsAdministrator = computed(() =>
   administrators.value.some(matchesCurrentUser),
 );
 const currentUserHasAdminRights = computed(
-  () => currentUserIsAdministrator.value || !!currentUser.value?.isAdmin,
+  () => currentUserIsAdministrator.value || !!session.value?.user.profile?.isAdmin,
 );
 
 const modifiedProperties = computed(() => {
