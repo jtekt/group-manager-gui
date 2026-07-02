@@ -13,6 +13,7 @@ export const auth = createAuthPlugin(
     },
     enrichmentEndpoint: import.meta.env.VITE_IDENTIFICATION_URL,
     enrichmentIdLookupField: '_id',
+    afterLoginPath: "/users/self/groups",
   },
   router
 );
