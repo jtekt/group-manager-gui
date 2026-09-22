@@ -42,8 +42,9 @@ import LocaleSelector from "@/components/LocaleSelector.vue";
 import ThemeToggle from "@/components/ThemeToggle.vue";
 import { useAuth } from "@jtekt/vuetify-auth";
 import api from "./api";
+import runtimeEnv from "@/runtimeEnv";
 
-const { VITE_APPS_URL } = import.meta.env;
+const { VITE_APPS_URL } = runtimeEnv;
 
 const { t } = useI18n();
 const route = useRoute();

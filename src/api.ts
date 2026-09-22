@@ -1,7 +1,8 @@
 import axios from 'axios'
+import runtimeEnv from '@/runtimeEnv'
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_GROUP_MANAGER_API_URL,
+  baseURL: runtimeEnv.VITE_GROUP_MANAGER_API_URL,
 })
 
 export default api

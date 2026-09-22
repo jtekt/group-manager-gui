@@ -62,6 +62,7 @@ import { useI18n } from "vue-i18n";
 import { UserPicker, type User } from "@moreillon/group-manager-vue-picker";
 import api from "@/api";
 import { useAuth } from "@jtekt/vuetify-auth";
+import runtimeEnv from "@/runtimeEnv";
 
 const props = defineProps<{ as?: string }>();
 const emit = defineEmits<{ usersChanged: [] }>();
@@ -77,7 +78,7 @@ const route = useRoute();
 const { session } = useAuth();
 const dialog = ref(false);
 const selectedUsers = ref<User[]>([]);
-const groupManagerApiUrl = import.meta.env.VITE_GROUP_MANAGER_API_URL;
+const groupManagerApiUrl = runtimeEnv.VITE_GROUP_MANAGER_API_URL;
 const snackbar = ref({ show: false, message: "", color: "" });
 
 const groupId = ref(route.params.group_id as string);

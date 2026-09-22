@@ -50,12 +50,13 @@ import {
 } from "@moreillon/group-manager-vue-picker";
 import GroupSearch from "@/components/GroupSearch.vue";
 import { useAuth } from "@jtekt/vuetify-auth";
+import runtimeEnv from "@/runtimeEnv";
 
 const route = useRoute();
 const router = useRouter();
 const { session } = useAuth();
 const tab = ref((route.query.tab as string) || "browse");
-const groupManagerApiUrl = import.meta.env.VITE_GROUP_MANAGER_API_URL;
+const groupManagerApiUrl = runtimeEnv.VITE_GROUP_MANAGER_API_URL;
 
 watch(tab, (value) => {
   router.replace({
