@@ -27,10 +27,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import pjson from "../../package.json";
+import runtimeEnv from "@/runtimeEnv";
 
 const { t } = useI18n();
-const version = pjson.version;
+const version = import.meta.env.VITE_APP_VERSION || "dev";
 
 const headers = computed(() => [
   { title: t("Service"), key: "name" },
@@ -41,9 +41,9 @@ const services = [
   { name: "Group manager GUI", url: window.location.origin },
   {
     name: "Group manager back-end",
-    url: import.meta.env.VITE_GROUP_MANAGER_API_URL,
+    url: runtimeEnv.VITE_GROUP_MANAGER_API_URL,
   },
-  { name: "Identification URL", url: import.meta.env.VITE_IDENTIFICATION_URL },
-  { name: "Login URL", url: import.meta.env.VITE_LOGIN_URL },
+  { name: "Identification URL", url: runtimeEnv.VITE_IDENTIFICATION_URL },
+  { name: "Login URL", url: runtimeEnv.VITE_LOGIN_URL },
 ];
 </script>

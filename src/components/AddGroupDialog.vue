@@ -33,6 +33,7 @@ import {
 } from "@moreillon/group-manager-vue-picker";
 import { useI18n } from "vue-i18n";
 import { useAuth } from "@jtekt/vuetify-auth";
+import runtimeEnv from "@/runtimeEnv";
 
 const props = defineProps<{ as?: string }>();
 const emit = defineEmits<{ groupAdd: [group: GroupItem] }>();
@@ -40,7 +41,7 @@ const emit = defineEmits<{ groupAdd: [group: GroupItem] }>();
 const { t } = useI18n();
 const { session } = useAuth();
 const dialog = ref(false);
-const groupManagerApiUrl = import.meta.env.VITE_GROUP_MANAGER_API_URL;
+const groupManagerApiUrl = runtimeEnv.VITE_GROUP_MANAGER_API_URL;
 
 const dialogTitle = computed(() => {
   if (props.as === "child") return t("Add child group");
