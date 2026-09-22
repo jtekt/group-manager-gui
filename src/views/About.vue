@@ -1,29 +1,21 @@
 <template>
   <v-card
-    max-width="30rem"
+    max-width="40rem"
     class="mx-auto"
     prepend-icon="mdi-information"
     :title="t('App title')"
+    :subtitle="version"
   >
     <v-card-text>
-      <v-list>
-        <v-list-item :title="t('Version')" :subtitle="version" />
-        <v-divider />
-        <v-list-subheader>{{ t("Environment variables") }}</v-list-subheader>
-        <v-list-item
-          title="VITE_GROUP_MANAGER_API_URL"
-          :subtitle="VITE_GROUP_MANAGER_API_URL"
-        />
-        <v-list-item title="VITE_LOGIN_URL" :subtitle="VITE_LOGIN_URL" />
-        <v-list-item
-          title="VITE_IDENTIFICATION_URL"
-          :subtitle="VITE_IDENTIFICATION_URL"
-        />
-        <v-list-item
-          title="VITE_USER_MANAGER_FRONT_URL"
-          :subtitle="VITE_USER_MANAGER_FRONT_URL"
-        />
-      </v-list>
+      <div class="text-subtitle-2 mb-2">{{ t("Environment variables") }}</div>
+      <v-table density="compact">
+        <tbody>
+          <tr v-for="envVar in envVars" :key="envVar.key">
+            <td>{{ envVar.key }}</td>
+            <td>{{ envVar.value }}</td>
+          </tr>
+        </tbody>
+      </v-table>
     </v-card-text>
   </v-card>
 </template>
@@ -42,4 +34,11 @@ const {
 } = runtimeEnv;
 
 const version = import.meta.env.VITE_APP_VERSION || "dev";
+
+const envVars = [
+  { key: "VITE_GROUP_MANAGER_API_URL", value: VITE_GROUP_MANAGER_API_URL },
+  { key: "VITE_LOGIN_URL", value: VITE_LOGIN_URL },
+  { key: "VITE_IDENTIFICATION_URL", value: VITE_IDENTIFICATION_URL },
+  { key: "VITE_USER_MANAGER_FRONT_URL", value: VITE_USER_MANAGER_FRONT_URL },
+];
 </script>
