@@ -7,6 +7,7 @@
         <LocaleSelector />
         <ThemeToggle />
         <v-btn v-if="VITE_APPS_URL" :href="VITE_APPS_URL" icon="mdi-apps" />
+        <v-btn v-if="VITE_HELP_URL" :href="VITE_HELP_URL" icon="mdi-help" />
         <v-btn  v-if="!route.meta.public" icon="mdi-logout" @click="logout" />
       </template>
     </v-app-bar>
@@ -44,7 +45,7 @@ import { useAuth } from "@jtekt/vuetify-auth";
 import api from "./api";
 import runtimeEnv from "@/runtimeEnv";
 
-const { VITE_APPS_URL } = runtimeEnv;
+const { VITE_APPS_URL, VITE_HELP_URL } = runtimeEnv;
 
 const { t } = useI18n();
 const route = useRoute();

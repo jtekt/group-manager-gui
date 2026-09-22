@@ -7,6 +7,7 @@ interface ImportMetaEnv {
   readonly VITE_IDENTIFICATION_URL?: string;
   readonly VITE_PASSWORD_RESET_URL?: string;
   readonly VITE_APPS_URL?: string;
+  readonly VITE_HELP_URL?: string;
   readonly VITE_LOGIN_HINT?: string;
   readonly VITE_OIDC_AUTHORITY?: string;
   readonly VITE_OIDC_CLIENT_ID?: string;
