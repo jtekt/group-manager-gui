@@ -1,49 +1,45 @@
 <template>
-  <v-card class="mx-auto" max-width="60em">
-    <template #prepend>
-      <v-avatar start color="transparent">
-        <v-icon>mdi-information-outline</v-icon>
-      </v-avatar>
-    </template>
-    <template #title>Group manager GUI {{ version }}</template>
+  <v-card
+    max-width="30rem"
+    class="mx-auto"
+    prepend-icon="mdi-information"
+    :title="t('App title')"
+  >
     <v-card-text>
-      <v-row>
-        <v-col>
-          Developed and maintained by
-          <a href="https://maximemoreillon.com">Maxime Moreillon</a>
-        </v-col>
-      </v-row>
-
-      <v-data-table
-        hide-default-footer
-        :items-per-page="-1"
-        :headers="headers"
-        :items="services"
-      />
+      <v-list>
+        <v-list-item :title="t('Version')" :subtitle="version" />
+        <v-divider />
+        <v-list-subheader>{{ t("Environment variables") }}</v-list-subheader>
+        <v-list-item
+          title="VITE_GROUP_MANAGER_API_URL"
+          :subtitle="VITE_GROUP_MANAGER_API_URL"
+        />
+        <v-list-item title="VITE_LOGIN_URL" :subtitle="VITE_LOGIN_URL" />
+        <v-list-item
+          title="VITE_IDENTIFICATION_URL"
+          :subtitle="VITE_IDENTIFICATION_URL"
+        />
+        <v-list-item
+          title="VITE_USER_MANAGER_FRONT_URL"
+          :subtitle="VITE_USER_MANAGER_FRONT_URL"
+        />
+      </v-list>
     </v-card-text>
   </v-card>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import runtimeEnv from "@/runtimeEnv";
 
 const { t } = useI18n();
+
+const {
+  VITE_GROUP_MANAGER_API_URL,
+  VITE_LOGIN_URL,
+  VITE_IDENTIFICATION_URL,
+  VITE_USER_MANAGER_FRONT_URL,
+} = runtimeEnv;
+
 const version = import.meta.env.VITE_APP_VERSION || "dev";
-
-const headers = computed(() => [
-  { title: t("Service"), key: "name" },
-  { title: "URL", key: "url" },
-]);
-
-const services = [
-  { name: "Group manager GUI", url: window.location.origin },
-  {
-    name: "Group manager back-end",
-    url: runtimeEnv.VITE_GROUP_MANAGER_API_URL,
-  },
-  { name: "Identification URL", url: runtimeEnv.VITE_IDENTIFICATION_URL },
-  { name: "Login URL", url: runtimeEnv.VITE_LOGIN_URL },
-];
 </script>
