@@ -5,7 +5,7 @@
         <v-icon>mdi-information-outline</v-icon>
       </v-avatar>
     </template>
-    <template #title>Group manager GUI v{{ version }}</template>
+    <template #title>Group manager GUI {{ version }}</template>
     <v-card-text>
       <v-row>
         <v-col>
