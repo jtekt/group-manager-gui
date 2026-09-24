@@ -16,6 +16,11 @@ spec:
       containers:
         - name: group-manager-front
           image: ${CONTAINER_IMAGE_TAGGED}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 5
           env:
             - name: VITE_OIDC_AUTHORITY
               value: https://keycloak.jtektrnd.net/realms/jtekt

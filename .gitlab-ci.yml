@@ -36,3 +36,4 @@ deploy:
     - kubectl config use-context eks/gitlab-agent-for-kubernetes:eks
     - kubectl config set-context --current --namespace=moreillon
     - envsubst < kubernetes_manifest.yml | kubectl apply -f -
+    - kubectl rollout status deployment/group-manager-front --timeout=120s
