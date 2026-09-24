@@ -1,6 +1,5 @@
 {
   "name": "group_manager_neo4j_front",
-  "version": "4.0.14",
   "private": true,
   "author": "Maxime Moreillon",
   "scripts": {
