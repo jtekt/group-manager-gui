@@ -36,20 +36,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import LocaleSelector from "@/components/LocaleSelector.vue";
 import ThemeToggle from "@/components/ThemeToggle.vue";
 import { useAuth } from "@jtekt/vuetify-auth";
 import api from "./api";
+import { useAxiosAuth } from "@/composables/useAxiosAuth";
 import runtimeEnv from "@/runtimeEnv";
 
 const { VITE_APPS_URL, VITE_HELP_URL } = runtimeEnv;
 
 const { t } = useI18n();
 const route = useRoute();
-const { session, logout } = useAuth();
+const { logout } = useAuth();
 
 const drawer = ref(true);
 
@@ -76,15 +77,7 @@ const nav = computed(() => [
   },
 ]);
 
-watch(
-  [session],
-  ([auth]) => {
-    if (auth?.accessToken) {
-      api.defaults.headers.common.Authorization = `Bearer ${auth.accessToken}`
-    } 
-  },
-  { immediate: true }
-)
+useAxiosAuth(api);
 </script>
 
 <style>
